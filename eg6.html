@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>AJAX Examples </title>
+<script>
+var panels=[];
+var expandedIndex=-1;
+function accordianHeadingClicked(x)
+{
+if(expandedIndex!=-1) panels[expandedIndex].style.display="none";
+panels[x+1].style.display=panels[x+1].oldDisplay;
+expandedIndex=x+1;
+}
+function doIt()
+{
+let accord=document.getElementById("mymy");
+let children=accord.childNodes;
+let x;
+for(x=0;x<children.length;x++) 
+{
+//alert(children[x].nodeName);
+if(children[x].nodeName=="H3")
+{
+panels[panels.length]=children[x];
+}
+if(children[x].nodeName=="DIV")
+{
+panels[panels.length]=children[x];
+}
+}
+if(panels.length%2!=0) throw "Heading and division malformed to create accordian";
+for(x=0;x<panels.length;x+=2)
+{
+if(panels[x].nodeName!="H3") throw "Heading and division malformed to create accordian";
+if(panels[x+1].nodeName!="DIV") throw "Heading and division malformed to create accordian";
+}
+function createClickHandler(i)
+{
+return function(){
+accordianHeadingClicked(i);
+};
+}
+for(x=0;x<panels.length;x+=2)
+{
+panels[x].onclick=createClickHandler(x);
+
+// clickHandler chlega or clickHandler jis function ka 
+//address return krega vo onclick ko assign hoga
+//or vo function tb chlega jb xth wale heading pr click ho
+
+panels[x+1].oldDisplay=panels[x+1].style.display;
+panels[x+1].style.display="none";
+}
+
+
+}
+window.addEventListener('load',doIt);
+</script>
+</head>
+<body>
+<div id='mymy'>
+<h3>Heading 1</h3>
+<div>
+1 whatever whatever
+2 whatever whatever
+3 whatever whatever
+4 whatever whatever
+5 whatever whatever
+6 whatever whatever
+7 whatever whatever
+</div>
+
+<h3>Heading 2</h3>
+<div>
+11 whatever whatever
+22 whatever whatever
+33 whatever whatever
+44 whatever whatever
+55 whatever whatever
+66 whatever whatever
+77 whatever whatever
+</div>
+
+<h3>Heading 3</h3>
+<div>
+111 whatever whatever
+222 whatever whatever
+333 whatever whatever
+444 whatever whatever
+555 whatever whatever
+666 whatever whatever
+777 whatever whatever
+</div>
+
+</div>
+</body>
+</html>
